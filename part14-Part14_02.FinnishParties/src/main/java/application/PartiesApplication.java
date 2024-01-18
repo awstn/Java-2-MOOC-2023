@@ -127,28 +127,15 @@ public class PartiesApplication extends Application {
 
         }
 
- 
-
         NumberAxis xAxis = new NumberAxis(1968, 2008, 4);
-
         NumberAxis yAxis = new NumberAxis();
 
- 
-
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-
         lineChart.setTitle("Relative support of the parties");
 
- 
-
         for (int i = 1; i < rows.size(); i++) {
-
             String[] row = rows.get(i);
-
- 
-
             XYChart.Series data = new XYChart.Series();
-
             data.setName(row[0]);
 
  
@@ -160,18 +147,13 @@ public class PartiesApplication extends Application {
                 if (value.equals("-")) {
 
                     continue;
-
                 }
-
- 
 
                 int year = Integer.parseInt(rows.get(0)[column]);
 
                 data.getData().add(new XYChart.Data(year, Double.parseDouble(value)));
 
             }
-
- 
 
             lineChart.getData().add(data);
 
