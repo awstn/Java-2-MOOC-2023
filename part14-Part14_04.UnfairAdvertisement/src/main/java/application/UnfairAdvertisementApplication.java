@@ -1,21 +1,24 @@
 package application;
 
+import java.util.Collections;
+import java.util.Comparator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.stage.Stage;
 
 public class UnfairAdvertisementApplication extends Application {
-
+    
     @Override
     public void start(Stage window) {
         CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis(77.0, 77.5, 0.1);
-        yAxis.setTickLabelsVisible(false);
-        yAxis.setLabel("Faster and Better!");
+        NumberAxis yAxis = new NumberAxis(0, 100, 10);
+        yAxis.setTickLabelsVisible(true);
+        yAxis.setLabel("Speed");
 
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
 
@@ -33,7 +36,7 @@ public class UnfairAdvertisementApplication extends Application {
         window.setScene(view);
         window.show();
     }
-
+     
     public static void main(String[] args) {
         launch(UnfairAdvertisementApplication.class);
     }

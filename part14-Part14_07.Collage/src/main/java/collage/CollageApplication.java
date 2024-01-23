@@ -27,33 +27,62 @@ public class CollageApplication extends Application {
         int height = (int) sourceImage.getHeight();
 
         WritableImage targetImage = new WritableImage(width, height);
-        PixelWriter imageWriter = targetImage.getPixelWriter();
+        PixelWriter tlImageWriter = targetImage.getPixelWriter();
+        PixelWriter trImageWriter = targetImage.getPixelWriter();
+        PixelWriter blImageWriter = targetImage.getPixelWriter();
+        PixelWriter brImageWriter = targetImage.getPixelWriter();
 
+        
         int yCoordinate = 0;
-        while (yCoordinate < height) {
+        int trYCoordinate = 0;
+        int blYCoordinate = height / 2;
+        int brYCoordinate = height / 2;
+        
+        
+        while (yCoordinate < height / 2) {
+            
             int xCoordinate = 0;
-            while (xCoordinate < width) {
+            int trXCoordinate = width / 2;
+            int blXCoordinate = 0;
+            int brXCoordinate = width / 2;
+           
+            while (xCoordinate < width / 2) {
 
-                Color color = imageReader.getColor(xCoordinate, yCoordinate);
-                double red = color.getRed();
-                double green = color.getGreen();
-                double blue = color.getBlue();
+                Color color = imageReader.getColor(xCoordinate * 2, yCoordinate * 2);
+                double red = 1.0 - color.getRed();
+                double green = 1.0 - color.getGreen();
+                double blue = 1.0 - color.getBlue();
                 double opacity = color.getOpacity();
 
                 Color newColor = new Color(red, green, blue, opacity);
 
-                imageWriter.setColor(xCoordinate, yCoordinate, newColor);
+                tlImageWriter.setColor(xCoordinate, yCoordinate, newColor);            
+                trImageWriter.setColor(trXCoordinate, trYCoordinate, newColor);
+                blImageWriter.setColor(blXCoordinate, blYCoordinate, newColor);
+                brImageWriter.setColor(brXCoordinate, brYCoordinate, newColor);
+
 
                 xCoordinate++;
+                trXCoordinate++;
+                blXCoordinate++;
+                brXCoordinate++;
+
             }
 
             yCoordinate++;
+            trYCoordinate++;
+            blYCoordinate++;
+            brYCoordinate++;
+
         }
+        
+        
 
         ImageView image = new ImageView(targetImage);
+       
 
         Pane pane = new Pane();
-        pane.getChildren().add(image);
+        pane.getChildren().addAll(image);
 
         stage.setScene(new Scene(pane));
         stage.show();
@@ -64,3 +93,164 @@ public class CollageApplication extends Application {
     }
 
 }
+
+
+/*
+    @Override
+
+    public void start(Stage stage) {
+
+ 
+
+        // the example opens the image, creates a new image, and copies the opened image
+
+        // into the new one, pixel by pixel
+
+        Image sourceImage = new Image("file:monalisa.png");
+
+ 
+
+        PixelReader imageReader = sourceImage.getPixelReader();
+
+ 
+
+        int width = (int) sourceImage.getWidth();
+
+        int height = (int) sourceImage.getHeight();
+
+ 
+
+        WritableImage targetImage = new WritableImage(width, height);
+
+        PixelWriter imageWriter = targetImage.getPixelWriter();
+
+ 
+
+        int yCoordinate = 0;
+
+        while (yCoordinate < height) {
+
+            int xCoordinate = 0;
+
+            while (xCoordinate < width) {
+
+ 
+
+                Color color = imageReader.getColor(xCoordinate, yCoordinate);
+
+                double red = color.getRed();
+
+                double green = color.getGreen();
+
+                double blue = color.getBlue();
+
+                double opacity = color.getOpacity();
+
+ 
+
+                Color newColor = new Color(red, green, blue, opacity);
+
+ 
+
+                imageWriter.setColor(xCoordinate, yCoordinate, newColor);
+
+ 
+
+                xCoordinate++;
+
+            }
+
+ 
+
+            yCoordinate++;
+
+        }
+
+ 
+
+        // create a smaller copy of the image in the top left corner
+
+        for (int x = 0; x < width / 2; x++) {
+
+            for (int y = 0; y < height / 2; y++) {
+
+                Color color = imageReader.getColor(x * 2, y * 2);
+
+                imageWriter.setColor(x, y, color);
+
+            }
+
+        }
+
+ 
+
+        // copy that image to the other corners
+
+        imageReader = targetImage.getPixelReader();
+
+        for (int x = 0; x < width / 2; x++) {
+
+            for (int y = 0; y < height / 2; y++) {
+
+                Color color = imageReader.getColor(x, y);
+
+ 
+
+                imageWriter.setColor(x + width / 2, y, color);
+
+                imageWriter.setColor(x, y + height / 2, color);
+
+                imageWriter.setColor(x + width / 2, y + height / 2, color);
+
+            }
+
+        }
+
+ 
+
+        // create the negative
+
+        for (int x = 0; x < width; x++) {
+
+            for (int y = 0; y < height; y++) {
+
+                Color color = imageReader.getColor(x, y);
+
+ 
+
+                double r = 1 - color.getRed();
+
+                double g = 1 - color.getGreen();
+
+                double b = 1 - color.getBlue();
+
+ 
+
+                Color negative = new Color(r, g, b, color.getOpacity());
+
+ 
+
+                imageWriter.setColor(x, y, negative);
+
+            }
+
+        }
+
+ 
+
+        ImageView image = new ImageView(targetImage);
+
+ 
+
+        Pane pane = new Pane();
+
+        pane.getChildren().add(image);
+
+ 
+
+        stage.setScene(new Scene(pane));
+
+        stage.show();
+
+    }
+*/
